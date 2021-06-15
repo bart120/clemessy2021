@@ -1,11 +1,12 @@
-import { Card, CardActionArea, CardContent, CardMedia, makeStyles } from '@material-ui/core'
+import { Card, CardActionArea, CardContent, CardMedia, Grid } from '@material-ui/core'
 import React, { Component } from 'react'
 import './Footer.css';
 
 export default class Footer extends Component {
 
     state = {
-        brands: []
+        brands: [],
+        year: new Date().getFullYear()
     }
 
     componentDidMount() {
@@ -27,23 +28,28 @@ export default class Footer extends Component {
         console.log('render');
         return (
             <footer>
-                &copy; formation ReactJS
+                &copy; {this.state.year} formation ReactJS
                 <div>
-                    {this.state.brands.map((brand, number) =>
-                        <Card className="root" key={brand.name}>
-                            <CardActionArea>
-                                <CardMedia
-                                    className="media"
-                                    image={`images/${brand.image}`}
-                                    title="{brand.name}"
-                                />
-                                <CardContent>
-                                    {brand.name}
-                                </CardContent>
-                            </CardActionArea>
-                        </Card>
-                    )}
-
+                    <Grid container direction="row"
+                        justify="center"
+                        alignItems="center">
+                        {this.state.brands.map((brand, number) =>
+                            <Grid item key={number}>
+                                <Card className="root">
+                                    <CardActionArea>
+                                        <CardMedia
+                                            className="media"
+                                            image={`images/${brand.image}`}
+                                            title="{brand.name}"
+                                        />
+                                        <CardContent>
+                                            {brand.name}
+                                        </CardContent>
+                                    </CardActionArea>
+                                </Card>
+                            </Grid>
+                        )}
+                    </Grid>
                 </div>
             </footer>
         )

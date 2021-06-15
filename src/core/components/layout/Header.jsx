@@ -3,22 +3,11 @@ import React, { Component } from 'react'
 
 export default class Header extends Component {
 
-    constructor() {
-        super();
-        console.log('contructeur');
-    }
 
-    componentDidMount() {
-        console.log('componentDidMount');
-    }
-
-    componentDidUpdate() {
-        console.log('componentDidUpdate');
-    }
 
 
     render() {
-        console.log('render');
+
         return (
             <AppBar>
                 <Toolbar>

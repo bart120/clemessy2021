@@ -2,8 +2,11 @@ import React, { Component } from 'react';
 import { TextField, Button } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
 import InputMail from '../../core/components/forms/InputMail';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { login } from '../../core/redux/authenticationActions';
 
-export default class Login extends Component {
+class Login extends Component {
 
     state = {
         displayMessage: '',
@@ -26,9 +29,11 @@ export default class Login extends Component {
         ev.preventDefault();
         //console.log("this: ", this);
         this.setState({ displayMessage: 'OK' });
-        const user = { login: this.state.login, password: this.state.password };
+        const user = { login: this.state.login, password: this.state.password, name: 'Bob' };
 
-        console.log("user: ", user);
+        //console.log("user: ", user);
+
+        this.props.login(user);
     }
 
     /*submit2(ev) {
@@ -42,6 +47,7 @@ export default class Login extends Component {
     }
 
     render() {
+        console.log('props login', this.props);
         return (
             <div>
                 <h1>Login</h1>
@@ -62,3 +68,9 @@ export default class Login extends Component {
         );
     }
 }
+
+const mapDispatchToProps = (payload) => {
+    return { login: bindActionCreators(login, payload) }
+}
+
+export default connect(null, mapDispatchToProps)(Login)

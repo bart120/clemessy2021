@@ -1,14 +1,11 @@
 import { AppBar, Link, Toolbar } from '@material-ui/core';
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 
-export default class Header extends Component {
-
-
-
-
+class Header extends Component {
     render() {
-
+        console.log("props", this.props);
         return (
             <AppBar>
                 <Toolbar>
@@ -16,10 +13,22 @@ export default class Header extends Component {
                     <NavLink to="/" className="link">Accueil</NavLink>
                     <NavLink to="/cars/list" className="link">Voitures</NavLink>
                     <NavLink to="/cars/add" className="link">Ajouter</NavLink>
-                    <NavLink to="/auth/login" className="link">Connexion</NavLink>
+                    {this.props.isConnected ?
+                        <span>Bonjour {this.props.user.name}</span> :
+                        <NavLink to="/auth/login" className="link">Connexion</NavLink>
+                    }
+
+
                     <NavLink to="/test" className="link">Test</NavLink>
                 </Toolbar>
             </AppBar>
         )
     }
 }
+
+const mapStateToProps = (state) => {
+    return { isConnected: state.isConnected, user: state.user };
+}
+
+
+export default connect(mapStateToProps)(Header);

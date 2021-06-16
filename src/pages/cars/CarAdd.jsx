@@ -1,8 +1,12 @@
 import React, { Component } from 'react'
 import { Button, FormControl, InputLabel, MenuItem, Select, TextField } from '@material-ui/core'
+import { CarsService } from '../../core/services/CarsService';
+import { BrandsService } from '../../core/services/BrandsService';
+
 
 export default class CarAdd extends Component {
-
+    static servCar = new CarsService();
+    static servBrand = new BrandsService();
 
     state = {
         car: {},
@@ -18,6 +22,11 @@ export default class CarAdd extends Component {
         this.setState({ car: car });
     }
 
+    componentDidMount() {
+        CarAdd.servBrand.getBrands().then(data => {
+            this.setState({ brands: data });
+        });
+    }
 
     render() {
         return (

@@ -14,4 +14,8 @@ export class CarsService extends BaseService {
         // return [];
         return this.get(url);
     }
+
+    saveCar(car) {
+        return this.post(url, car);
+    }
 }

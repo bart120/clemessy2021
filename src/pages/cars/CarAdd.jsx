@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Button, FormControl, InputLabel, MenuItem, Select, TextField } from '@material-ui/core'
 import { CarsService } from '../../core/services/CarsService';
 import { BrandsService } from '../../core/services/BrandsService';
+import moment from 'moment';
 
 
 export default class CarAdd extends Component {
@@ -15,10 +16,17 @@ export default class CarAdd extends Component {
 
     submit = (ev) => {
         ev.preventDefault();
+        const car = this.state.car;
+        car.price = +car.price;
+        CarAdd.servCar.saveCar(car).then(data => {
+            alert(`Voiture enregistrée avec l'ID ${data.id}`);
+        });
     }
 
     changeFormField = (ev) => {
+
         const car = Object.assign(this.state.car, { [ev.target.name]: ev.target.value });
+        console.log(car);
         this.setState({ car: car });
     }
 
@@ -41,7 +49,8 @@ export default class CarAdd extends Component {
                         <TextField type="number" label="Prix" name="price" value={this.state.car.price || 0} onChange={this.changeFormField} />
                     </div>
                     <div>
-                        <TextField type="date" label="Mise en circulation" name="dateOfCirculation" value={this.state.car.dateOfCirculation} onChange={this.changeFormField} />
+                        <TextField type="date" label="Mise en circulation" name="dateOfCirculation"
+                            value={moment(this.state.car.dateOfCirculation).format('yyyy-MM-DD')} onChange={this.changeFormField} />
                     </div>
                     <div>
                         <FormControl>
